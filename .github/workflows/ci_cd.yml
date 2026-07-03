@@ -42,7 +42,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-  scan:
+  scan-image:
     needs: build-push
     runs-on: ubuntu-latest
     steps:
@@ -63,7 +63,7 @@ jobs:
           severity-threshold: CRITICAL, HIGH
 
   deploy-ecs:
-    needs: scan
+    needs: scan-image
     runs-on: ubuntu-latest
     steps:
       - name: Configure AWS credentials
